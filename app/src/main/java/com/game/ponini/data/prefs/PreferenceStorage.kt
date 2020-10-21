@@ -1,4 +1,4 @@
-package com.example.ponini.data.prefs
+package com.game.ponini.data.prefs
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -6,7 +6,7 @@ import androidx.annotation.WorkerThread
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.ponini.BuildConfig
+import com.game.ponini.BuildConfig
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 

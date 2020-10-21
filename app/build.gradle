@@ -12,7 +12,7 @@ android {
     buildToolsVersion rootProject.buildToolsSdkVersion
 
     defaultConfig {
-        applicationId "com.example.ponini"
+        applicationId "com.game.ponini"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1

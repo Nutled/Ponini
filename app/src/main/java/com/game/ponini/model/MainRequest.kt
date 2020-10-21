@@ -1,4 +1,4 @@
-package com.example.ponini.model
+package com.game.ponini.model
 
 /**
  * Created by Viнt@rь on 21.10.2020

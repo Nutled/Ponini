@@ -1,4 +1,4 @@
-package com.example.ponini.api
+package com.game.ponini.api
 
 /**
  * Created by Viнt@rь on 21.10.2020

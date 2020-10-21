@@ -1,4 +1,4 @@
-package com.example.ponini
+package com.game.ponini
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

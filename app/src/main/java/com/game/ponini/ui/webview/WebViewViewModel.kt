@@ -1,4 +1,4 @@
-package com.example.ponini.ui.webview
+package com.game.ponini.ui.webview
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

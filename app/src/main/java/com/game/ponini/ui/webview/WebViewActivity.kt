@@ -1,4 +1,4 @@
-package com.example.ponini.ui.webview
+package com.game.ponini.ui.webview
 
 import android.content.Intent
 import android.net.Uri
@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.ponini.databinding.ActivityWebviewBinding
+import com.game.ponini.databinding.ActivityWebviewBinding
 
 
 /**

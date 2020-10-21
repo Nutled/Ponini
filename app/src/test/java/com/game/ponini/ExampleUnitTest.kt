@@ -1,4 +1,4 @@
-package com.example.ponini
+package com.game.ponini
 
 import org.junit.Test
 

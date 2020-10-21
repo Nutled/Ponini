@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.ponini.domain
+package com.game.ponini.domain
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

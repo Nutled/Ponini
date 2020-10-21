@@ -1,4 +1,4 @@
-package com.example.ponini.data
+package com.game.ponini.data
 
 /**
  * Created by Viнt@rь on 21.10.2020
