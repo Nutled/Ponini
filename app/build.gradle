@@ -32,6 +32,8 @@ android {
 
             //signingConfig signingConfigs.main
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "URL", "\"https://testym.online/\""
         }
     }
     compileOptions {
