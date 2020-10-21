@@ -1,7 +1,8 @@
-package com.example.ponini
+package com.example.ponini.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.ponini.R
 
 class MainActivity : AppCompatActivity() {
 
