@@ -1,6 +1,10 @@
 package com.game.ponini.api
 
+import com.game.ponini.model.test.TestRequest
 import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 /**
@@ -8,6 +12,10 @@ import retrofit2.http.POST
  */
 interface API {
 
+    @Headers("PackageName: test.package.name")
     @POST("/test")
-    fun test(request: Any): Call<Any>
+    suspend fun test(@Body request: TestRequest): Call<Any>
+
+    @GET("/push")
+    fun getPush(): Call<Any>
 }

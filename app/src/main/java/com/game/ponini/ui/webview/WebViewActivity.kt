@@ -4,23 +4,28 @@ import android.content.Intent
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Bundle
+import android.util.Log
 import android.webkit.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.game.ponini.databinding.ActivityWebviewBinding
-
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Created by Viнt@rь on 28.01.2020
  */
+@AndroidEntryPoint
 class WebViewActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_SELECT_FILE = 1
     }
 
+    private val viewModel: WebViewViewModel by viewModels()
+
     private lateinit var binding: ActivityWebviewBinding
     private lateinit var uploadMessage: ValueCallback<Array<Uri>>
-    private lateinit var viewModel: WebViewViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +36,12 @@ class WebViewActivity : AppCompatActivity() {
             startActivity(intent)
             return
         }*/
-        viewModel = ViewModelProvider(this).get(WebViewViewModel::class.java)
-
         binding = ActivityWebviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel.test.observe(this, {
+            Log.d("TEST", "test response")
+        })
 
         binding.webview.apply {
             settings.apply {
