@@ -2,6 +2,7 @@ package com.game.ponini.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.webkit.WebView
 import com.game.ponini.R
 import dagger.hilt.android.AndroidEntryPoint
 

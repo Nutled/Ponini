@@ -23,7 +23,7 @@ class WebViewViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     val test: LiveData<Any> = liveData {
-        emit(api.test(TestRequest("", "", "", emptyList())).execute().body()!!)
+       // emit(api.test(TestRequest("", "", "", emptyList())).execute().body()!!)
     }
 
     private val _deepLinkFB = MutableLiveData<String>() // facebook
