@@ -4,6 +4,9 @@ import android.content.Context
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.appsflyer.AppsFlyerConversionListener
+import com.appsflyer.AppsFlyerLib
+import com.game.ponini.BuildConfig
 import com.game.ponini.data.MainRepository
 import com.game.ponini.domain.Event
 import com.game.ponini.model.main.MainRequest
@@ -31,17 +34,17 @@ class MainViewModel @ViewModelInject constructor(
     }
 
     private val _accelerometer = MutableLiveData<List<Double>>()
-    val accelerometer: LiveData<List<Double>> get() = _accelerometer
+    //val accelerometer: LiveData<List<Double>> get() = _accelerometer
 
     private val _deepLinkFB = MutableLiveData<String>() // facebook
-    val deepLinkFB: LiveData<String> get() = _deepLinkFB
+    //val deepLinkFB: LiveData<String> get() = _deepLinkFB
 
     private val _deepLinkAPS = MutableLiveData<String>() // appsflyer
-    val deepLinkAPS: LiveData<String> get() = _deepLinkAPS
+    //val deepLinkAPS: LiveData<String> get() = _deepLinkAPS
 
     init {
         _reconnectAction.value = Event(Unit)
-        /*AppLinkData.fetchDeferredAppLinkData(context) {
+        /*AppLinkData.fetchDeferredAppLinkData(context) { // TODO uncomment this when facebook api key will be added to project
             if (it == null) {
                 InstallReferrerClient.newBuilder(context).build().apply {
                     startConnection(object : InstallReferrerStateListener {
@@ -62,6 +65,29 @@ class MainViewModel @ViewModelInject constructor(
                 _deepLinkFB.postValue(it.ref)
             }
         }*/
+
+        val listener = object : AppsFlyerConversionListener {
+            override fun onConversionDataSuccess(data: MutableMap<String, Any>?) {
+                data?.let { cvData ->
+                    cvData.map {
+                        Log.i("MainViewModel", "conversion_attribute: ${it.key} = ${it.value}")
+                    }
+                }
+            }
+
+            override fun onConversionDataFail(p0: String?) {
+            }
+
+            override fun onAppOpenAttribution(data: MutableMap<String, String>?) {
+                data?.map {
+                    Log.d("MainViewModel", "onAppOpen_attribute: ${it.key} = ${it.value}")
+                }
+            }
+
+            override fun onAttributionFailure(p0: String?) {
+            }
+        }
+        AppsFlyerLib.getInstance().init(BuildConfig.APPSFLYER_API_KEY, listener, context)
     }
 
     fun reconnect() {

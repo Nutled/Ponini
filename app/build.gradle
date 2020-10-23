@@ -28,6 +28,8 @@ android {
             //signingConfig signingConfigs.main
 
             buildConfigField "String", "URL", "\"https://testym.online/\""
+            buildConfigField "String", "APPMETRICA_API_KEY", "\"53eb4b5d-3970-4b80-8d04-a812d2a49143\""
+            buildConfigField "String", "APPSFLYER_API_KEY", "\"qrdZGj123456789\"" // TODO change to our api key
         }
         release {
             minifyEnabled false
@@ -73,8 +75,8 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
 
     implementation "com.facebook.android:facebook-android-sdk:$facebookSdkVersion"
-    implementation 'com.yandex.android:mobmetricalib:3.16.1'
-    implementation 'com.appsflyer:af-android-sdk:5.2.0'
+    implementation "com.yandex.android:mobmetricalib:$appmetricaVersion"
+    implementation "com.appsflyer:af-android-sdk:$appsflyerVersion"
 
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltVersion"

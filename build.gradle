@@ -35,7 +35,9 @@ buildscript {
         retrofitVersion = '2.9.0'
         okHttpVersion = '4.9.0'
         installReferrerVersion = '2.1'
-        facebookSdkVersion = '4.40.0'
+        facebookSdkVersion = '5.4.0'
+        appmetricaVersion = '3.16.1'
+        appsflyerVersion = '5.4.3'
     }
     repositories {
         google()

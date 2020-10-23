@@ -1,16 +1,13 @@
 package com.game.ponini.ui
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.webkit.WebView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import com.appsflyer.AppsFlyerConversionListener
+import com.appsflyer.AppsFlyerLib
 import com.game.ponini.BuildConfig
-import com.game.ponini.R
 import com.game.ponini.databinding.ActivityMainBinding
-import com.game.ponini.databinding.ActivityWebviewBinding
 import com.game.ponini.ui.webview.WebViewActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
