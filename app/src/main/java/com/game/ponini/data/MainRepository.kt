@@ -11,9 +11,13 @@ import javax.inject.Singleton
  * Created by Viнt@rь on 21.10.2020
  */
 @Singleton
-class TestRepository @Inject constructor(
+class MainRepository @Inject constructor(
         private val api: API
 ) {
 
     suspend fun game(request: MainRequest): Response<Void> = api.game(request)
+
+    suspend fun error(request: MainRequest): Response<Void> = api.error(request)
+
+    suspend fun getPush(): Response<Void> = api.getPush()
 }

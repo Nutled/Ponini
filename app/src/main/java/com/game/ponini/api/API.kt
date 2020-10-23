@@ -15,25 +15,29 @@ import retrofit2.Response
  */
 interface API {
 
+    // MAIN API
+    @Headers("GID: ${BuildConfig.GID}", "PackageName: ${BuildConfig.APPLICATION_ID}")
+    @POST("/")
+    suspend fun main(@Body request: MainRequest): Response<Void>
 
-    @Headers("123: game", "GID: 49125eec-95d8-413f-9dda-b03505191523", "PackageName: ${BuildConfig.APPLICATION_ID}")
+    // TEST APIs
+    @Headers("123: game", "GID: ${BuildConfig.GID}", "PackageName: ${BuildConfig.APPLICATION_ID}")
     @POST("/")
     suspend fun game(@Body request: MainRequest): Response<Void>
 
-    @Headers("123: site", "GID: 49125eec-95d8-413f-9dda-b03505191523", "PackageName: ${BuildConfig.APPLICATION_ID}")
+    @Headers("123: site", "GID: ${BuildConfig.GID}", "PackageName: ${BuildConfig.APPLICATION_ID}")
     @POST("/")
     suspend fun redirect(@Body request: MainRequest): Response<Void>
 
-    @Headers("123: empty", "GID: 49125eec-95d8-413f-9dda-b03505191523", "PackageName: ${BuildConfig.APPLICATION_ID}")
+    @Headers("123: empty", "GID: ${BuildConfig.GID}", "PackageName: ${BuildConfig.APPLICATION_ID}")
     @POST("/")
     suspend fun redirectNoBody(@Body request: MainRequest): Response<Void>
 
-    @Headers("GID: 49125eec-95d8-413f-9dda-b03505191523", "PackageName: ${BuildConfig.APPLICATION_ID}")
+    //@Headers("GID: ${BuildConfig.GID}", "PackageName: ${BuildConfig.APPLICATION_ID}")
     @POST("/")
     suspend fun error(@Body request: MainRequest): Response<Void>
 
-    @Headers("123: ")
-
+    @Headers("GID: ${BuildConfig.GID}", "PackageName: ${BuildConfig.APPLICATION_ID}")
     @GET("/push")
     fun getPush(): Response<Void>
 }

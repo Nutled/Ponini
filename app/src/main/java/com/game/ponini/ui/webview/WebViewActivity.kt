@@ -39,10 +39,6 @@ class WebViewActivity : AppCompatActivity() {
         binding = ActivityWebviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.test.observe(this, {
-            Log.d("TEST", "test response")
-        })
-
         binding.webview.apply {
             settings.apply {
                 javaScriptEnabled = true

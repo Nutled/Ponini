@@ -8,14 +8,14 @@ import com.google.gson.annotations.SerializedName
 data class MainRequest(
 
     @SerializedName("deeplink_fb")
-    val deepLinkFB: String,
+    val deepLinkFB: String?,
 
     @SerializedName("deeplink_aps")
-    val deepLinkAPS: String,
+    val deepLinkAPS: String?,
 
-    @SerializedName("referrer")
-    val referrer: String, //TODO mb need remove
+    //@SerializedName("referrer")
+    //val referrer: String, //TODO mb need remove
 
     @SerializedName("accelerometer")
-    val accelerometer: List<Double>,
+    val accelerometer: List<Double>?,
 )
