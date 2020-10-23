@@ -10,6 +10,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.game.ponini.R
+
 import com.game.ponini.databinding.ActivityWebviewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,6 +31,7 @@ class WebViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         /*if (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) < BuildConfig.WEB_VIEW_DATE) {
             finish()
 
