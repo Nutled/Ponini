@@ -1,8 +1,5 @@
 package com.game.ponini
 
-import android.os.Build
-import com.appsflyer.AppsFlyerConversionListener
-import com.appsflyer.AppsFlyerLib
 import com.yandex.metrica.YandexMetrica
 import com.yandex.metrica.YandexMetricaConfig
 import dagger.hilt.android.HiltAndroidApp
@@ -19,5 +16,6 @@ class Application : android.app.Application() {
         val config = YandexMetricaConfig.newConfigBuilder(BuildConfig.APPMETRICA_API_KEY).build()
         YandexMetrica.activate(this, config)
         YandexMetrica.enableActivityAutoTracking(this)
+
     }
 }

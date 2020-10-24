@@ -17,9 +17,9 @@ import retrofit2.Response
  * Created by Viнt@rь on 21.10.2020
  */
 class MainViewModel @ViewModelInject constructor(
-        @ApplicationContext
-        private val context: Context,
-        private val repository: MainRepository
+    @ApplicationContext
+    private val context: Context,
+    private val repository: MainRepository
 ) : ViewModel() {
 
     private val _reconnectAction = MutableLiveData<Event<Unit>>()
@@ -75,7 +75,8 @@ class MainViewModel @ViewModelInject constructor(
                 }
             }
 
-            override fun onConversionDataFail(p0: String?) {
+            override fun onConversionDataFail(error: String?) {
+                Log.e("MainViewModel", "error onAttributionFailure :  $error")
             }
 
             override fun onAppOpenAttribution(data: MutableMap<String, String>?) {
@@ -84,10 +85,12 @@ class MainViewModel @ViewModelInject constructor(
                 }
             }
 
-            override fun onAttributionFailure(p0: String?) {
+            override fun onAttributionFailure(error: String?) {
+                Log.e("MainViewModel", "error onAttributionFailure :  $error")
             }
         }
         AppsFlyerLib.getInstance().init(BuildConfig.APPSFLYER_API_KEY, listener, context)
+        AppsFlyerLib.getInstance().startTracking(context)
     }
 
     fun reconnect() {
