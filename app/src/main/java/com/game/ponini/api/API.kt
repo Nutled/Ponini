@@ -2,6 +2,7 @@ package com.game.ponini.api
 
 import com.game.ponini.BuildConfig
 import com.game.ponini.model.main.MainRequest
+import com.game.ponini.model.push.PushResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -39,5 +40,5 @@ interface API {
 
     @Headers("GID: ${BuildConfig.GID}", "PackageName: ${BuildConfig.APPLICATION_ID}")
     @GET("/push")
-    fun getPush(): Response<Void>
+    suspend fun getPush(): PushResponse
 }

@@ -17,5 +17,5 @@ data class MainRequest(
     //val referrer: String, //TODO mb need remove
 
     @SerializedName("accelerometer")
-    val accelerometer: List<Double>?,
+    val accelerometer: List<Float>?,
 )

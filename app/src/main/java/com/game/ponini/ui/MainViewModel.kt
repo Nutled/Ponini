@@ -1,16 +1,27 @@
 package com.game.ponini.ui
 
 import android.content.Context
-import android.util.Log
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import androidx.collection.ArraySet
+import androidx.collection.arraySetOf
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.android.installreferrer.api.InstallReferrerClient
+import com.android.installreferrer.api.InstallReferrerStateListener
 import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
+import com.facebook.applinks.AppLinkData
 import com.game.ponini.BuildConfig
 import com.game.ponini.data.MainRepository
 import com.game.ponini.domain.Event
 import com.game.ponini.model.main.MainRequest
+import com.game.ponini.model.push.PushResponse
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import retrofit2.Response
 
 /**
@@ -22,36 +33,59 @@ class MainViewModel @ViewModelInject constructor(
     private val repository: MainRepository
 ) : ViewModel() {
 
-    private val _reconnectAction = MutableLiveData<Event<Unit>>()
+    private val accelerometerListener = object : SensorEventListener {
+        private val data = ArrayList<Float>()
 
-    val result: LiveData<Response<Void>> = _reconnectAction.switchMap {
+        override fun onSensorChanged(event: SensorEvent?) {
+            event?.values?.map {
+                data.add(it)
+            }
+
+            accelerometer.value = data
+        }
+
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        }
+    }
+
+    private val accelerometer = MutableLiveData<List<Float>>()
+    private val deepLinkFB = MutableLiveData<String>() // facebook
+    private val deepLinkAPS = MutableLiveData<String>() // appsflyer
+
+    private val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    private val reconnectAction = MediatorLiveData<Event<Unit>>().apply {
+        addSource(deepLinkFB) {
+            sensorManager.unregisterListener(accelerometerListener)
+            reconnect()
+        }
+        addSource(deepLinkAPS) {
+            sensorManager.unregisterListener(accelerometerListener)
+            reconnect()
+        }
+    }
+
+    val result: LiveData<Response<Void>> = reconnectAction.switchMap {
         liveData {
-            val deepLinkFB = _deepLinkFB.value
-            val deepLinkAPS = _deepLinkAPS.value
-            val accelerometer = _accelerometer.value
+            val deepLinkFB = deepLinkFB.value
+            val deepLinkAPS = deepLinkAPS.value
+            val accelerometer = accelerometer.value
             emit(repository.game(MainRequest(deepLinkFB, deepLinkAPS, accelerometer)))
         }
     }
 
-    private val _accelerometer = MutableLiveData<List<Double>>()
-    //val accelerometer: LiveData<List<Double>> get() = _accelerometer
-
-    private val _deepLinkFB = MutableLiveData<String>() // facebook
-    //val deepLinkFB: LiveData<String> get() = _deepLinkFB
-
-    private val _deepLinkAPS = MutableLiveData<String>() // appsflyer
-    //val deepLinkAPS: LiveData<String> get() = _deepLinkAPS
+    val pushResult: LiveData<PushResponse> = liveData {
+        emit(repository.getPush())
+    }
 
     init {
-        _reconnectAction.value = Event(Unit)
-        /*AppLinkData.fetchDeferredAppLinkData(context) { // TODO uncomment this when facebook api key will be added to project
+        AppLinkData.fetchDeferredAppLinkData(context) {
             if (it == null) {
                 InstallReferrerClient.newBuilder(context).build().apply {
                     startConnection(object : InstallReferrerStateListener {
                         override fun onInstallReferrerSetupFinished(responseCode: Int) {
                             when (responseCode) {
                                 InstallReferrerClient.InstallReferrerResponse.OK -> {
-                                    _deepLinkFB.value = installReferrer.installReferrer
+                                    deepLinkFB.value = installReferrer.installReferrer
                                     endConnection()
                                 }
                             }
@@ -62,31 +96,34 @@ class MainViewModel @ViewModelInject constructor(
                     })
                 }
             } else {
-                _deepLinkFB.postValue(it.ref)
+                deepLinkFB.postValue(it.ref)
             }
-        }*/
+        }
+
+        val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        sensorManager.registerListener(
+            accelerometerListener,
+            accelerometer,
+            SensorManager.SENSOR_DELAY_NORMAL
+        )
 
         val listener = object : AppsFlyerConversionListener {
             override fun onConversionDataSuccess(data: MutableMap<String, Any>?) {
                 data?.let { cvData ->
-                    cvData.map {
-                        Log.i("MainViewModel", "conversion_attribute: ${it.key} = ${it.value}")
-                    }
+                    deepLinkAPS.value = cvData["http_referrer"] as String?
                 }
             }
 
             override fun onConversionDataFail(error: String?) {
-                Log.e("MainViewModel", "error onAttributionFailure :  $error")
             }
 
             override fun onAppOpenAttribution(data: MutableMap<String, String>?) {
-                data?.map {
-                    Log.d("MainViewModel", "onAppOpen_attribute: ${it.key} = ${it.value}")
+                data?.let { cvData ->
+                    deepLinkAPS.value = cvData["http_referrer"]
                 }
             }
 
             override fun onAttributionFailure(error: String?) {
-                Log.e("MainViewModel", "error onAttributionFailure :  $error")
             }
         }
         AppsFlyerLib.getInstance().init(BuildConfig.APPSFLYER_API_KEY, listener, context)
@@ -94,6 +131,6 @@ class MainViewModel @ViewModelInject constructor(
     }
 
     fun reconnect() {
-        _reconnectAction.value = Event(Unit)
+        reconnectAction.value = Event(Unit)
     }
 }

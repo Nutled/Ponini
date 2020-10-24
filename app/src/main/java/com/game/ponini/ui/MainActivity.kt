@@ -2,6 +2,7 @@ package com.game.ponini.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.appsflyer.AppsFlyerConversionListener
@@ -23,6 +24,9 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel.pushResult.observe(this, {
+        })
 
         viewModel.result.observe(this, { it ->
             when {

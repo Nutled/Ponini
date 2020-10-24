@@ -16,6 +16,5 @@ class Application : android.app.Application() {
         val config = YandexMetricaConfig.newConfigBuilder(BuildConfig.APPMETRICA_API_KEY).build()
         YandexMetrica.activate(this, config)
         YandexMetrica.enableActivityAutoTracking(this)
-
     }
 }

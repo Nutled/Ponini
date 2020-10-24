@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Ponini</string>
+
+    <string name="facebook_app_id">963654057457803</string>
 </resources>
