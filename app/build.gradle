@@ -22,19 +22,26 @@ android {
 
         buildConfigField "String", "GID", "\"49125eec-95d8-413f-9dda-b03505191523\""
     }
-
+    signingConfigs {
+        main {
+            storeFile file("../keystore.jks")
+            storePassword "android"
+            keyAlias "ponini"
+            keyPassword "android"
+        }
+    }
     buildTypes {
         debug {
-            //signingConfig signingConfigs.main
+            signingConfig signingConfigs.main
 
             buildConfigField "String", "URL", "\"https://testym.online/\""
             buildConfigField "String", "APPMETRICA_API_KEY", "\"53eb4b5d-3970-4b80-8d04-a812d2a49143\""
-            buildConfigField "String", "APPSFLYER_API_KEY", "\"qrdZGj123456789\"" // TODO change to our api key
+            buildConfigField "String", "APPSFLYER_API_KEY", "\"E9xRzqZ7eVvyJ3zAQcSHad\""
         }
         release {
             minifyEnabled false
 
-            //signingConfig signingConfigs.main
+            signingConfig signingConfigs.main
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             buildConfigField "String", "URL", "\"https://testym.online/\""
