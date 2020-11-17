@@ -7,12 +7,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.reflect.Type
 import javax.inject.Singleton
 
 
@@ -31,6 +28,7 @@ class AppModule {
         }
 
         val client = OkHttpClient.Builder()
+                .followRedirects(false)
                 .addNetworkInterceptor(loggingInterceptor)
                 .build()
 

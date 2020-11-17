@@ -10,12 +10,9 @@ data class MainRequest(
     @SerializedName("deeplink_fb")
     val deepLinkFB: String?,
 
-    @SerializedName("deeplink_aps")
-    val deepLinkAPS: String?,
-
-    //@SerializedName("referrer")
-    //val referrer: String, //TODO mb need remove
+    @SerializedName("referrer")
+    val referrer: String?,
 
     @SerializedName("accelerometer")
-    val accelerometer: List<Double>?,
+    val accelerometer: List<Float>?,
 )

@@ -4,27 +4,23 @@ import android.content.Intent
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Bundle
-import android.util.Log
 import android.webkit.*
-import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.game.ponini.R
-
 import com.game.ponini.databinding.ActivityWebviewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Created by Viнt@rь on 28.01.2020
  */
+@RequiresApi(23)
 @AndroidEntryPoint
 class WebViewActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_SELECT_FILE = 1
-    }
 
-    private val viewModel: WebViewViewModel by viewModels()
+        const val KEY_LOCATION = "location"
+    }
 
     private lateinit var binding: ActivityWebviewBinding
     private lateinit var uploadMessage: ValueCallback<Array<Uri>>
@@ -32,13 +28,6 @@ class WebViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        /*if (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) < BuildConfig.WEB_VIEW_DATE) {
-            finish()
-
-            val intent = Intent(this@WebViewActivity, MainActivity::class.java)
-            startActivity(intent)
-            return
-        }*/
         binding = ActivityWebviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -75,19 +64,10 @@ class WebViewActivity : AppCompatActivity() {
                     return true
                 }
             }
-
             CookieManager.getInstance().setAcceptCookie(true)
+
+            loadUrl(intent.getStringExtra(KEY_LOCATION)!!)
         }
-
-/*        viewModel.deepLink.observe(this, {
-            binding.webview.apply {
-                settings.userAgentString += " |${BuildConfig.APPLICATION_ID}|${Locale.getDefault().country}|${it}"
-                settings.userAgentString = settings.userAgentString.replace("; wv", "")
-                //loadUrl(BuildConfig.URL)
-
-                CookieManager.getInstance().setAcceptCookie(true)
-            }
-        })*/
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

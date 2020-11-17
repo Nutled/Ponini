@@ -2,7 +2,7 @@ package com.game.ponini.data
 
 import com.game.ponini.api.API
 import com.game.ponini.model.main.MainRequest
-import okhttp3.ResponseBody
+import com.game.ponini.model.push.PushResponse
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,7 +17,11 @@ class MainRepository @Inject constructor(
 
     suspend fun game(request: MainRequest): Response<Void> = api.game(request)
 
+    suspend fun redirect(request: MainRequest): Response<Void> = api.redirect(request)
+
+    suspend fun redirectNoBody(request: MainRequest): Response<Void> = api.redirectNoBody(request)
+
     suspend fun error(request: MainRequest): Response<Void> = api.error(request)
 
-    suspend fun getPush(): Response<Void> = api.getPush()
+    suspend fun getPush(): PushResponse = api.getPush()
 }

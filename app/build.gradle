@@ -20,6 +20,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        multiDexEnabled true
         buildConfigField "String", "GID", "\"49125eec-95d8-413f-9dda-b03505191523\""
     }
     signingConfigs {
@@ -34,17 +35,18 @@ android {
         debug {
             signingConfig signingConfigs.main
 
-            buildConfigField "String", "URL", "\"https://testym.online/\""
+            buildConfigField "String", "URL", "\"https://auff.xyz/\""
             buildConfigField "String", "APPMETRICA_API_KEY", "\"53eb4b5d-3970-4b80-8d04-a812d2a49143\""
             buildConfigField "String", "APPSFLYER_API_KEY", "\"E9xRzqZ7eVvyJ3zAQcSHad\""
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
 
             signingConfig signingConfigs.main
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            buildConfigField "String", "URL", "\"https://testym.online/\""
+            buildConfigField "String", "URL", "\"https://auff.xyz/\""
         }
     }
     compileOptions {
@@ -63,6 +65,7 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
+    implementation "androidx.multidex:multidex:$multidexVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
